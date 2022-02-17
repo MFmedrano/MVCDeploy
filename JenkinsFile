@@ -7,15 +7,15 @@ pipeline {
 						checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '4ab987f4-a4b2-4d3e-b139-a7863ea9f077', url: 'https://github.com/MFmedrano/MVCDeploy']]])
 					}
 				}
-				stage('Build') {
-    					steps {
-    					    bat "\"${tool 'MSBuild'}\" MVCDeploy.sln /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:SkipInvalidConfigurations=true /t:build /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeleteExistingFiles=True /p:publishUrl=C:\\Users\\Lenovo\\Documents\\compiled"
-    					}
-				}
 				stage('Backup'){
 					steps{
 						bat("xcopy C:\\Users\\Lenovo\\Documents\\compiled C:\\Users\\Lenovo\\Documents\\compiledbackup /O /X /E /H /K")
 					}
 				}
+				stage('Build') {
+    					steps {
+    					    bat "\"${tool 'MSBuild'}\" MVCDeploy.sln /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:SkipInvalidConfigurations=true /t:build /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeleteExistingFiles=True /p:publishUrl=C:\\Users\\Lenovo\\Documents\\compiled"
+    					}
+				}				
 			}
 }
