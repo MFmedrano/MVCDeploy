@@ -12,5 +12,10 @@ pipeline {
     					    bat "\"${tool 'MSBuild'}\" MVCDeploy.sln /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:SkipInvalidConfigurations=true /t:build /p:Configuration=Release /p:Platform=\"Any CPU\" /p:DeleteExistingFiles=True /p:publishUrl=C:\\Users\\Lenovo\\Documents\\compiled"
     					}
 				}
+				stage('Backup'){
+					steps{
+						bat("xcopy C:\\Users\\Lenovo\\Documents\\compiled C:\\Users\\Lenovo\\Documents\\compiledbackup /O /X /E /H /K")
+					}
+				}
 			}
 }
